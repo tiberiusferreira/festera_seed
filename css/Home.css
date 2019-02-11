@@ -1,0 +1,113 @@
+.event-posts-container{
+    display: grid;
+    max-width: 1050px;
+    margin: 10px auto 0 auto;
+    border-radius: 3px;
+    grid-template-columns: auto;
+    grid-gap: 30px;
+    padding-top: 10px;
+}
+
+@media (min-width:951px) { /* or more*/
+    .event-container {
+        display: grid;
+        max-height: 220px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        grid-template-columns: 1fr 1fr 1fr;
+        overflow: hidden;
+        border: 1px solid #000000;
+
+    }
+
+    .expanded-event-container {
+        display: grid;
+        background-color: #ffffff;
+        border-radius: 10px;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: auto auto;
+        overflow: hidden;
+        border: 1px solid #000000;
+    }
+
+    .expanded-event-details{
+        grid-column: 1 / span 3;
+        grid-row: 2;
+        background-color: #ffffff;
+        border-radius: 0 0 5px 5px;
+        padding: 10px;
+    }
+
+
+    .event-img {
+        max-width: 100%;
+        grid-column: 2 / 4;
+    }
+
+    .event-detail{
+        grid-column: 1;
+        text-align: center;
+    }
+
+    .event-detail > h3, .event-detail > h4, .event-detail > h5{
+        padding: 8px;
+    }
+
+    .event-detail > h3{
+        color: #cc2c51
+    }
+
+    .event-detail {
+        margin: auto;
+    }
+}
+
+@media (max-width:950px){ /* or less */
+    .event-container {
+        display: grid;
+        max-height: 440px;
+        background-color: #ffffff;
+        border-radius: 5px;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(5, 1fr);
+        overflow: hidden;
+        border: 1px solid #000000;
+        margin: 0 30px 0 30px;
+    }
+
+    .expanded-event-container {
+        display: grid;
+        background-color: #ffffff;
+        border-radius: 5px;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(5, 1fr) auto;
+        overflow: hidden;
+        border: 1px solid #000000;
+        margin: 0 30px 0 30px;
+    }
+
+    .expanded-event-details{
+        grid-column: 1;
+        grid-row: 6;
+        background-color: #ffffff;
+        transition:visibility 0s linear 5s,opacity 5s linear;
+        padding: 10px;
+    }
+
+    .event-img{
+        max-width:100%;
+        grid-row: 1/ span 3;
+    }
+
+    .event-detail{
+        text-align: center;
+        margin: auto;
+        grid-row: 4/ span 2;
+    }
+
+    .event-detail > h3{
+        color: #cc2c51
+    }
+
+}
+

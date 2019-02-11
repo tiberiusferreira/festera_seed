@@ -1,0 +1,16 @@
+[package]
+name = "festera_seed"
+version = "0.1.0"
+authors = ["Tiberio D A R Ferreira <tiberiusferreira@gmail.com>"]
+edition = "2018"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+#seed = "*"
+seed = {path = "../seed"}
+wasm-bindgen = "*"
+web-sys = "*"
+strum = "0.13.0"
+strum_macros = "0.13.0"

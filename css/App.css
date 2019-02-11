@@ -1,0 +1,15 @@
+body{
+  margin: 0;
+  background-color: #dbdbdb;
+}
+h2, h3, h4, h5{
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+
+.footer{
+  height: 60px;
+}
+
