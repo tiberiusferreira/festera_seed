@@ -129,16 +129,32 @@ __exports.__widl_f_set_attribute_Element = function(arg0, arg1, arg2, arg3, arg4
     }
 };
 
+let cachedTextEncoder = new TextEncoder('utf-8');
+
+let WASM_VECTOR_LEN = 0;
+
+function passStringToWasm(arg) {
+
+    const buf = cachedTextEncoder.encode(arg);
+    const ptr = wasm.__wbindgen_malloc(buf.length);
+    getUint8Memory().set(buf, ptr);
+    WASM_VECTOR_LEN = buf.length;
+    return ptr;
+}
+
+__exports.__widl_f_inner_html_Element = function(ret, arg0) {
+
+    const retptr = passStringToWasm(getObject(arg0).innerHTML);
+    const retlen = WASM_VECTOR_LEN;
+    const mem = getUint32Memory();
+    mem[ret / 4] = retptr;
+    mem[ret / 4 + 1] = retlen;
+
+};
+
 __exports.__widl_f_set_inner_html_Element = function(arg0, arg1, arg2) {
     let varg1 = getStringFromWasm(arg1, arg2);
     getObject(arg0).innerHTML = varg1;
-};
-
-__exports.__widl_f_first_element_child_Element = function(arg0) {
-
-    const val = getObject(arg0).firstElementChild;
-    return isLikeNone(val) ? 0 : addHeapObject(val);
-
 };
 
 __exports.__widl_f_add_event_listener_with_callback_EventTarget = function(arg0, arg1, arg2, arg3, exnptr) {
@@ -184,19 +200,6 @@ __exports.__widl_f_set_autofocus_HTMLInputElement = function(arg0, arg1) {
 __exports.__widl_f_set_checked_HTMLInputElement = function(arg0, arg1) {
     getObject(arg0).checked = arg1 !== 0;
 };
-
-let cachedTextEncoder = new TextEncoder('utf-8');
-
-let WASM_VECTOR_LEN = 0;
-
-function passStringToWasm(arg) {
-
-    const buf = cachedTextEncoder.encode(arg);
-    const ptr = wasm.__wbindgen_malloc(buf.length);
-    getUint8Memory().set(buf, ptr);
-    WASM_VECTOR_LEN = buf.length;
-    return ptr;
-}
 
 __exports.__widl_f_value_HTMLInputElement = function(ret, arg0) {
 
@@ -380,6 +383,10 @@ __exports.__widl_f_replace_child_Node = function(arg0, arg1, arg2, exnptr) {
     }
 };
 
+__exports.__widl_f_node_type_Node = function(arg0) {
+    return getObject(arg0).nodeType;
+};
+
 __exports.__widl_f_set_text_content_Node = function(arg0, arg1, arg2) {
     let varg1 = arg1 == 0 ? undefined : getStringFromWasm(arg1, arg2);
     getObject(arg0).textContent = varg1;
@@ -543,7 +550,7 @@ __exports.__wbindgen_json_parse = function(ptr, len) {
     return addHeapObject(JSON.parse(getStringFromWasm(ptr, len)));
 };
 
-__exports.__wbindgen_closure_wrapper124 = function(a, b, _ignored) {
+__exports.__wbindgen_closure_wrapper112 = function(a, b, _ignored) {
     const f = wasm.__wbg_function_table.get(47);
     const d = wasm.__wbg_function_table.get(48);
     const cb = function(arg0) {

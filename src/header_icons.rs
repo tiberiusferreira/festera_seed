@@ -1,3 +1,4 @@
+use super::*;
 pub fn setting_icon(class: &str, fill_color: &str) ->  String{
     format!(r#"<svg class="{}" width="100%" height="100%" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
     viewBox="0 0 478.703 478.703" style="enable-background:new 0 0 478.703 478.703;" xml:space="preserve">
@@ -29,6 +30,11 @@ pub fn setting_icon(class: &str, fill_color: &str) ->  String{
         </svg>"#, class, fill_color, fill_color)
 }
 
+//pub fn parties_icon2(class: &str, fill_color: &str) ->  El<Msg>{
+//    svg![attrs!{At::Class => class; "xmlns" => "http://www.w3.org/2000/svg", "height" => "100%",
+//    "width" => "100%", "viewBox" => "0 0 512 512", "labelledby" => "title",
+//    },]
+//}
 pub fn parties_icon(class: &str, fill_color: &str) ->  String{
     format!(r#"<svg class={} xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 512 512" aria-labelledby="title">
         <path fill={} d="M345.863,281.853c19.152-8.872,38.221-15.344,56.953-19.308c5.403-1.143,8.856-6.45,7.713-11.853

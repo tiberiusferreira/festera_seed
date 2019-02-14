@@ -1,12 +1,6 @@
 use seed::*;
 use seed::prelude::*;
 use strum_macros::*;
-//mod header;
-//use header::*;
-//mod body_content;
-//use body_content::*;
-//mod about_content;
-//mod fotos_content;
 use std::str::FromStr;
 mod header_icons;
 use header_icons::*;
@@ -18,15 +12,15 @@ pub struct Model {
 
 #[derive(Clone, PartialEq, Display, EnumString)]
 pub enum Page {
-    Fotos,
-    Vagas,
-    Sobre,
+    Eventos,
+    EventosSalvos,
+    AdicioneEvento,
 }
 
 impl Default for Model {
     fn default() -> Self {
         Self {
-            current_page: Page::Sobre
+            current_page: Page::Eventos
         }
     }
 }
@@ -49,7 +43,7 @@ fn update(msg: Msg, model: Model) -> Update<Model> {
             update(Msg::ChangePage(page), model)
         },
 
-        // This is separate, because in-app naviation needs to call push_route,
+        // This is separate, because in-app navigation needs to call push_route,
         // but we don't want to call it from browser navigation. (eg back button)
         Msg::ChangePage(current_page) => {
             Render (Model {current_page, ..model})
@@ -61,29 +55,42 @@ fn update(msg: Msg, model: Model) -> Update<Model> {
 }
 
 
-// View
-
-
 /// The top-level component we pass to the virtual dom.
 fn view(state: seed::App<Msg, Model>, model: &Model) -> El<Msg> {
-    div![attrs!{At::Class => "main-nav-organizer"},
-        a![
-            attrs!{At::Class => "navlink navlink-selected"},
-            El::from_html(&header_icons::parties_icon("main-nav-items",  "deepskyblue"))
-        ],
-        a![
-            attrs!{At::Class => "navlink"},
-            El::from_html(&header_icons::new_event_icon("main-nav-items",  "lightgrey"))
-        ],
-        a![
-            attrs!{At::Class => "navlink"},
-            El::from_html(&header_icons::tickets_icon("main-nav-items",  "lightgrey"))
-        ],
-        a![
-            attrs!{At::Class => "navlink"},
-            El::from_html(&header_icons::setting_icon("main-nav-items",  "lightgrey"))
+    let mut nav_class_parties = "navlink".to_string();
+    let mut nav_class_tickets = nav_class_parties.clone();
+    let mut nav_class_new_event = nav_class_parties.clone();
+    match model.current_page {
+        Page::Eventos => {
+            nav_class_parties.push_str(" navlink-selected");
+        },
+        Page::EventosSalvos => {
+            nav_class_tickets.push_str(" navlink-selected");
+        },
+        Page::AdicioneEvento => {
+            nav_class_new_event.push_str(" navlink-selected");
+        },
+    }
+        div![
+            div![
+                attrs!{At::Class => "main-nav"},
+                a![
+                    attrs!{At::Class => nav_class_parties},
+                    El::from_html(&header_icons::parties_icon("main-nav-items",  "lightgrey"))
+                ],
+                a![
+                    attrs!{At::Class => nav_class_tickets},
+                    El::from_html(&header_icons::tickets_icon("main-nav-items",  "lightgrey"))
+                ],
+                a![
+                    attrs!{At::Class => nav_class_new_event},
+                    El::from_html(&header_icons::new_event_icon("main-nav-items",  "lightgrey"))
+                ],
+
+            ],
+
         ]
-    ]
+
 
     /*
     <div className={isOrganizer ? ("main-nav-organizer") : ("main-nav")}>
@@ -108,7 +115,7 @@ fn view(state: seed::App<Msg, Model>, model: &Model) -> El<Msg> {
 fn routes(url: &seed::Url) -> Msg {
     log(format!("{:#?}", url));
     if url.path.is_empty() {
-        return Msg::ChangePage(Page::Sobre)
+        return Msg::ChangePage(Page::AdicioneEvento)
     }
 
     match Page::from_str(&url.path[0]){
@@ -116,7 +123,7 @@ fn routes(url: &seed::Url) -> Msg {
             return Msg::ChangePage(page)
         },
         Err(_) => {
-            return Msg::ChangePage(Page::Sobre)
+            return Msg::ChangePage(Page::AdicioneEvento)
         }
     };
 }
