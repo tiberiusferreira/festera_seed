@@ -11,7 +11,7 @@
 }
 
 .event-posts-container-save-button{
-    width: 50%;
+    width: 40%;
     height: 4em;
     line-height: 4em;
     border-radius: 20px;
@@ -38,16 +38,17 @@
         grid-template-rows: auto auto auto;
         overflow: hidden;
         border: 1px solid #000000;
-        margin: 0 30px 0 30px;
+        margin: 0 5% 0 5%;
     }
 
     .event-summary-container{
         width: 100%;
         height: 100%;
+        padding: 7px;
         display: grid;
         grid-row: 2 / span 1;
         grid-template-columns: auto;
-        grid-template-rows: repeat(7, 1fr);
+        grid-template-rows: repeat(5, 1fr);
         grid-gap: 5px;
         cursor: pointer;
     }
@@ -71,27 +72,32 @@
 
     .event-summary-title{
         margin: auto;
-        grid-row: 2 / span 1;
+        text-align: center;
+        grid-row: 1 / span 1;
     }
 
     .event-summary-date{
         margin: auto;
-        grid-row: 3 / span 1;
+        text-align: center;
+        grid-row: 2 / span 1;
     }
 
     .event-summary-place{
         margin: auto;
-        grid-row: 4 / span 1;
+        text-align: center;
+        grid-row: 3 / span 1;
     }
 
     .event-summary-sales-place{
         margin: auto;
-        grid-row: 5 / span 1;
+        text-align: center;
+        grid-row: 4 / span 1;
     }
 
     .event-summary-price{
         margin: auto;
-        grid-row: 6 / span 1;
+        text-align: center;
+        grid-row: 5 / span 1;
         color: #cc2c51;
     }
 
@@ -113,14 +119,16 @@
         grid-template-rows: auto auto;
         overflow: hidden;
         border: 1px solid #000000;
+        margin: 0 40px 0 40px;
     }
 
     .event-summary-container{
         width: 100%;
         height: 100%;
+        padding: 5px;
         display: grid;
         grid-template-columns: auto;
-        grid-template-rows: repeat(7, 1fr);
+        grid-template-rows: repeat(5, 1fr);
         grid-gap: 1px;
         cursor: pointer;
     }
@@ -139,27 +147,32 @@
 
     .event-summary-title{
         margin: auto;
-        grid-row: 2 / span 1;
+        text-align: center;
+        grid-row: 1 / span 1;
     }
 
     .event-summary-date{
         margin: auto;
-        grid-row: 3 / span 1;
+        text-align: center;
+        grid-row: 2 / span 1;
     }
 
     .event-summary-place{
         margin: auto;
-        grid-row: 4 / span 1;
+        text-align: center;
+        grid-row: 3 / span 1;
     }
 
     .event-summary-sales-place{
         margin: auto;
-        grid-row: 5 / span 1;
+        text-align: center;
+        grid-row: 4 / span 1;
     }
 
     .event-summary-price{
         margin: auto;
-        grid-row: 6 / span 1;
+        text-align: center;
+        grid-row: 5 / span 1;
         color: #cc2c51;
     }
 

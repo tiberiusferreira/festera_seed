@@ -182,7 +182,8 @@ fn view(state: seed::App<Msg, Model>, model: &Model) -> El<Msg> {
     };
     div![
             header::header(model),
-            page_body
+            page_body,
+            div![attrs!{At::Class => "footer"},]
         ]
 }
 

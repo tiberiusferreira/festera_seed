@@ -10,6 +10,7 @@ crate-type = ["cdylib"]
 [dependencies]
 #seed = "*"
 seed = {path = "../seed"}
+#seed = {git = "https://github.com/David-OConnor/seed.git", rev = "bd90f1cb15c9fca98398a63019d9829ce6d1a295"}
 wasm-bindgen = "*"
 web-sys = "*"
 strum = "0.13.0"
