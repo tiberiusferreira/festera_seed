@@ -8,6 +8,9 @@ body{
 }
 
 h2, h3, h4, h5{
+  display: block;
+  font-size: 1.5em;
+  font-weight: bold;
   margin: 0;
   padding: 0;
   border: 0;

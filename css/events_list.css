@@ -15,7 +15,7 @@
     height: 4em;
     line-height: 4em;
     border-radius: 20px;
-    background-color: deepskyblue;
+    background-color: #0000001a;
     margin: auto;
     border: 2px solid #000000;
     cursor: pointer;
@@ -26,7 +26,51 @@
     text-align: center;
 }
 
+.event-summary{
+    grid-column: 1;
+    text-align: center;
+}
 
+
+.event-summary-title{
+    display: block;
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 0;
+    border: 0;
+}
+
+.event-summary-date{
+    display: block;
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 0;
+    border: 0;
+}
+
+.event-summary-place{
+    display: block;
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 0;
+    border: 0;
+}
+
+.event-summary-sales-place{
+    display: block;
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 0;
+    border: 0;
+}
+
+.event-summary-price{
+    display: block;
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 0;
+    border: 0;
+}
 
 @media (max-width:950px){ /* or less */
 

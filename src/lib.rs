@@ -7,44 +7,13 @@ use serde::{Serialize, Deserialize};
 use serde_json::from_str;
 mod events_view;
 use events_view::events_list;
+mod model;
+use model::*;
+mod event_editor;
 use seed::{Request, Method, spawn_local};
 use futures::Future;
 
-#[derive(Clone)]
-pub struct Model {
-    current_page: Page,
-    events: Vec<Event>
-}
 
-#[derive(Deserialize, Serialize, Debug, Clone)]
-pub struct Event {
-    date: String,
-    description: String,
-    id: u64,
-    image_alt: String,
-    image_url: String,
-    place: String,
-    price: f32,
-    sales_place: String,
-    title: String,
-    #[serde(default)]
-    ui_state: EventUIState
-}
-
-#[derive(Deserialize, Serialize, Debug, Clone)]
-struct EventUIState{
-    expanded: bool,
-    saved: bool,
-}
-
-impl Default for EventUIState {
-    fn default() -> Self {
-        Self {
-            expanded: false,
-            saved: false
-        }
-    }
-}
 
 #[derive(Clone, PartialEq, Display, EnumString)]
 pub enum Page {
@@ -53,58 +22,7 @@ pub enum Page {
     AdicioneEvento,
 }
 
-impl Default for Model {
-    fn default() -> Self {
-        Self {
-            current_page: Page::Eventos,
-            events: vec![Event{
-                date: "Date".to_string(),
-                description: "O CARNAVRAAU está chegando daquele jeitinho e sabe quem vai entrar na onda dos bloquinhos? 💥
 
-A Cervejada mais raiz desse Mackenzie!
-
-Ela vem em clima de carnaval, prontíssima pra primeira do ano!
-
-E se você pensa que cachaça não é água não, vai preparando o seu fígado pra um Open Bar de respeito! Vem aí:
-
-Mackejada - Carnaval 🎉🍻
-
-Vamos curtir em ritmo carnavalesco e claro em ritmo de BAILÃO! 😈
-".to_string(),
-                id: 1,
-                image_alt: "alt ".to_string(),
-                image_url: "https://s3-us-west-2.amazonaws.com/pixel-solutions/event/banner/99e98ab25482f8eaae5742a9d94e91ed.jpg".to_string(),
-                place: "Place".to_string(),
-                price: 10.0,
-                sales_place: "Sales Place".to_string(),
-                title: "The Title".to_string(),
-                ui_state: EventUIState::default()
-            },Event{
-                date: "Date 2".to_string(),
-                description: "O CARNAVRAAU está chegando daquele jeitinho e sabe quem vai entrar na onda dos bloquinhos? 💥
-
-A Cervejada mais raiz desse Mackenzie!
-
-Ela vem em clima de carnaval, prontíssima pra primeira do ano!
-
-E se você pensa que cachaça não é água não, vai preparando o seu fígado pra um Open Bar de respeito! Vem aí:
-
-Mackejada - Carnaval 🎉🍻
-
-Vamos curtir em ritmo carnavalesco e claro em ritmo de BAILÃO! 😈
-".to_string(),
-                id: 2,
-                image_alt: "alt ".to_string(),
-                image_url: "https://s3-us-west-2.amazonaws.com/pixel-solutions/event/banner/99e98ab25482f8eaae5742a9d94e91ed.jpg".to_string(),
-                place: "Place 2".to_string(),
-                price: 20.0,
-                sales_place: "Sales Place".to_string(),
-                title: "The Title".to_string(),
-                ui_state: EventUIState::default()
-            }]
-        }
-    }
-}
 
 #[derive(Clone)]
 pub enum Msg {
@@ -113,6 +31,11 @@ pub enum Msg {
     ToggleEvent(u64),
     ToggleSaveEvent(u64),
     NewEvents(Vec<Event>),
+    EventEditingTitle(String),
+    EventEditingDate(String),
+    EventEditingPlace(String),
+    EventEditingSalesPlace(String),
+    EventEditingPrice(String),
     Nothing,
 }
 
@@ -166,6 +89,26 @@ fn update(msg: Msg, mut model: Model) -> Update<Model> {
             model.events = events;
             Render(model)
         },
+        Msg::EventEditingTitle(title) => {
+            model.event_begin_edited.title = title;
+            Render(model)
+        },
+        Msg::EventEditingDate(date) => {
+            model.event_begin_edited.date = date;
+            Render(model)
+        },
+        Msg::EventEditingPlace(place) => {
+            model.event_begin_edited.place = place;
+            Render(model)
+        },
+        Msg::EventEditingSalesPlace(sales_place) => {
+            model.event_begin_edited.sales_place = sales_place;
+            Render(model)
+        },
+        Msg::EventEditingPrice(price) => {
+            model.event_begin_edited.price = price.parse().unwrap_or(model.event_begin_edited.price);
+            Render(model)
+        },
         Msg::Nothing => {
             Skip(model)
         }
@@ -176,12 +119,23 @@ fn update(msg: Msg, mut model: Model) -> Update<Model> {
 /// The top-level component we pass to the virtual dom.
 fn view(state: seed::App<Msg, Model>, model: &Model) -> El<Msg> {
     let page_body = match model.current_page{
-        Page::Eventos => {events_list(model)},
-        Page::EventosSalvos => {empty()},
+        Page::Eventos => {events_list(model.events
+            .iter()
+            .collect::<Vec<&Event>>()
+            .as_slice())
+        },
+        Page::EventosSalvos => {
+            let saved_events = model.events
+                .iter()
+                .filter(|event| event.ui_state.saved)
+                .collect::<Vec<&Event>>();
+            events_list(saved_events.as_slice())
+        },
         Page::AdicioneEvento => {empty()},
     };
     div![
             header::header(model),
+            event_editor::event_editor(model),
             page_body,
             div![attrs!{At::Class => "footer"},]
         ]

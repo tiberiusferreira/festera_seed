@@ -176,6 +176,13 @@ __exports.__widl_f_set_inner_html_Element = function(arg0, arg1, arg2) {
     getObject(arg0).innerHTML = varg1;
 };
 
+__exports.__widl_f_target_Event = function(arg0) {
+
+    const val = getObject(arg0).target;
+    return isLikeNone(val) ? 0 : addHeapObject(val);
+
+};
+
 __exports.__widl_f_add_event_listener_with_callback_EventTarget = function(arg0, arg1, arg2, arg3, exnptr) {
     let varg1 = getStringFromWasm(arg1, arg2);
     try {
@@ -524,7 +531,7 @@ __exports.__wbg_new_5dc66f71c54d38f0 = function(arg0, arg1) {
         }
 
     };
-    cbarg0.f = wasm.__wbg_function_table.get(143);
+    cbarg0.f = wasm.__wbg_function_table.get(155);
     cbarg0.a = arg0;
     cbarg0.b = arg1;
     try {
@@ -659,9 +666,9 @@ __exports.__wbindgen_json_parse = function(ptr, len) {
     return addHeapObject(JSON.parse(getStringFromWasm(ptr, len)));
 };
 
-__exports.__wbindgen_closure_wrapper83 = function(a, b, _ignored) {
-    const f = wasm.__wbg_function_table.get(28);
-    const d = wasm.__wbg_function_table.get(29);
+__exports.__wbindgen_closure_wrapper197 = function(a, b, _ignored) {
+    const f = wasm.__wbg_function_table.get(73);
+    const d = wasm.__wbg_function_table.get(74);
     const cb = function(arg0) {
         this.cnt++;
         let a = this.a;
@@ -683,9 +690,9 @@ __exports.__wbindgen_closure_wrapper83 = function(a, b, _ignored) {
     return addHeapObject(real);
 };
 
-__exports.__wbindgen_closure_wrapper288 = function(a, b, _ignored) {
-    const f = wasm.__wbg_function_table.get(104);
-    const d = wasm.__wbg_function_table.get(105);
+__exports.__wbindgen_closure_wrapper317 = function(a, b, _ignored) {
+    const f = wasm.__wbg_function_table.get(116);
+    const d = wasm.__wbg_function_table.get(117);
     const cb = function(arg0) {
         this.cnt++;
         let a = this.a;
