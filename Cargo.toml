@@ -12,10 +12,19 @@ crate-type = ["cdylib"]
 seed = {path = "../seed"}
 #seed = {git = "https://github.com/David-OConnor/seed.git", rev = "bd90f1cb15c9fca98398a63019d9829ce6d1a295"}
 wasm-bindgen = "*"
-web-sys = "*"
 strum = "0.13.0"
 strum_macros = "0.13.0"
 serde = "*"
 serde_json = "*"
 serde_derive = "*"
 futures = "^0.1.20"
+[dependencies.web-sys]
+version = "0.3.10"
+features = [
+    "FileReader",
+    "File",
+    "FileList",
+    "HtmlInputElement",
+    "FileReaderSync",
+    "Blob"
+]

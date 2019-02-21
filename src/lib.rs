@@ -12,7 +12,7 @@ use model::*;
 mod event_editor;
 use seed::{Request, Method, spawn_local};
 use futures::Future;
-
+use wasm_bindgen::JsCast;
 
 
 #[derive(Clone, PartialEq, Display, EnumString)]
@@ -36,6 +36,8 @@ pub enum Msg {
     EventEditingPlace(String),
     EventEditingSalesPlace(String),
     EventEditingPrice(String),
+    EventEditingPicture(seed::App<Msg, Model>, web_sys::Event),
+    EventEditingPictureNewSrc(String),
     Nothing,
 }
 
@@ -109,7 +111,46 @@ fn update(msg: Msg, mut model: Model) -> Update<Model> {
             model.event_begin_edited.price = price.parse().unwrap_or(model.event_begin_edited.price);
             Render(model)
         },
+        Msg::EventEditingPicture(state , event) =>{
+            let target = event.target().unwrap();
+            let target_event = seed::to_input(&target);
+
+            let target = event.target().unwrap();
+            let text = seed::to_input(&target).value();
+
+            let img = target_event.files().unwrap().get(0).unwrap();
+            let file_reader = web_sys::FileReader::new().expect("error creating file reader");
+            file_reader.read_as_data_url(&img);
+            let cloned = file_reader.clone();
+
+            let callback = move || {
+//                state.update(Msg::NewEvents(events_json));
+                log(format!("{:?}", cloned.result().unwrap()));
+                let src = cloned.result().unwrap();
+                state.update(Msg::EventEditingPictureNewSrc(src.as_string().expect("Jsvalue to string failed")));
+                log("Done uploading");
+            };
+
+            let cb = Closure::wrap(Box::new(callback
+            ) as Box<dyn Fn()>);
+
+//            let callback = Closure::wrap(handler as Box<dyn Fn()>);
+//            seed::set_interval()
+            file_reader.set_onloadend(Some(
+                cb.as_ref().unchecked_ref()
+            ));
+
+
+            cb.forget();
+            log(format!("{:?}", img.name()));
+            Skip(model)
+        },
+        Msg::EventEditingPictureNewSrc(src) => {
+            model.event_begin_edited.image_url = src;
+            Render(model)
+        },
         Msg::Nothing => {
+            log("Nothing");
             Skip(model)
         }
     }
@@ -135,7 +176,7 @@ fn view(state: seed::App<Msg, Model>, model: &Model) -> El<Msg> {
     };
     div![
             header::header(model),
-            event_editor::event_editor(model),
+            event_editor::event_editor(state, model),
             page_body,
             div![attrs!{At::Class => "footer"},]
         ]

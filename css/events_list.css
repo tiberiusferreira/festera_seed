@@ -22,8 +22,15 @@
     box-shadow: 0 0 20px 0 rgba(0,0,0,0.5);
 }
 
-.event-posts-container-save-button > h2{
+
+.event-posts-container-save-button-text {
     text-align: center;
+    display: block;
+    font-size: 2em;
+    letter-spacing: 0.1em;
+    font-weight: bold;
+    padding: 0;
+    border: 0;
 }
 
 .event-summary{
@@ -219,9 +226,6 @@
         grid-row: 5 / span 1;
         color: #cc2c51;
     }
-
-
-
 
 }
 
