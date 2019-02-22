@@ -200,6 +200,10 @@ __exports.__widl_f_set_inner_html_Element = function(arg0, arg1, arg2) {
     getObject(arg0).innerHTML = varg1;
 };
 
+__exports.__widl_f_prevent_default_Event = function(arg0) {
+    getObject(arg0).preventDefault();
+};
+
 __exports.__widl_f_target_Event = function(arg0) {
 
     const val = getObject(arg0).target;
@@ -366,6 +370,14 @@ __exports.__widl_f_push_state_with_url_History = function(arg0, arg1, arg2, arg3
     } catch (e) {
         handleError(exnptr, e);
     }
+};
+
+__exports.__widl_instanceof_KeyboardEvent = function(idx) {
+    return getObject(idx) instanceof KeyboardEvent ? 1 : 0;
+};
+
+__exports.__widl_f_key_code_KeyboardEvent = function(arg0) {
+    return getObject(arg0).keyCode;
 };
 
 __exports.__widl_f_pathname_Location = function(ret, arg0, exnptr) {
@@ -737,9 +749,9 @@ __exports.__wbindgen_json_parse = function(ptr, len) {
     return addHeapObject(JSON.parse(getStringFromWasm(ptr, len)));
 };
 
-__exports.__wbindgen_closure_wrapper129 = function(a, b, _ignored) {
-    const f = wasm.__wbg_function_table.get(13);
-    const d = wasm.__wbg_function_table.get(14);
+__exports.__wbindgen_closure_wrapper147 = function(a, b, _ignored) {
+    const f = wasm.__wbg_function_table.get(26);
+    const d = wasm.__wbg_function_table.get(27);
     const cb = function(arg0) {
         this.cnt++;
         let a = this.a;
@@ -761,9 +773,9 @@ __exports.__wbindgen_closure_wrapper129 = function(a, b, _ignored) {
     return addHeapObject(real);
 };
 
-__exports.__wbindgen_closure_wrapper131 = function(a, b, _ignored) {
-    const f = wasm.__wbg_function_table.get(17);
-    const d = wasm.__wbg_function_table.get(14);
+__exports.__wbindgen_closure_wrapper149 = function(a, b, _ignored) {
+    const f = wasm.__wbg_function_table.get(30);
+    const d = wasm.__wbg_function_table.get(27);
     const cb = function() {
         this.cnt++;
         try {
@@ -782,7 +794,7 @@ __exports.__wbindgen_closure_wrapper131 = function(a, b, _ignored) {
     return addHeapObject(real);
 };
 
-__exports.__wbindgen_closure_wrapper428 = function(a, b, _ignored) {
+__exports.__wbindgen_closure_wrapper435 = function(a, b, _ignored) {
     const f = wasm.__wbg_function_table.get(128);
     const d = wasm.__wbg_function_table.get(129);
     const cb = function(arg0) {

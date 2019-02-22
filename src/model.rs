@@ -8,7 +8,7 @@ pub struct Model {
     pub event_begin_edited: IncompleteEvent,
 }
 
-#[derive(Deserialize, Serialize, Debug, Clone, Default)]
+#[derive(Deserialize, Serialize, Debug, Clone)]
 pub struct IncompleteEvent {
     pub date: String,
     pub description: String,
@@ -18,6 +18,21 @@ pub struct IncompleteEvent {
     pub sales_place: String,
     pub title: String,
 }
+
+impl Default for IncompleteEvent{
+    fn default() -> Self {
+        IncompleteEvent{
+            date: "".to_string(),
+            description: "".to_string(),
+            image_url: "pkg/placeholder.jpg".to_string(),
+            place: "".to_string(),
+            price: 0.0,
+            sales_place: "".to_string(),
+            title: "".to_string()
+        }
+    }
+}
+
 
 
 #[derive(Deserialize, Serialize, Debug, Clone)]

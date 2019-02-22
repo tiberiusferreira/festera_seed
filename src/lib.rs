@@ -36,6 +36,7 @@ pub enum Msg {
     EventEditingPlace(String),
     EventEditingSalesPlace(String),
     EventEditingPrice(String),
+    EventEditingPriceKeyDown(web_sys::Event),
     EventEditingPicture(seed::App<Msg, Model>, web_sys::Event),
     EventEditingPictureNewSrc(String),
     Nothing,
@@ -108,7 +109,55 @@ fn update(msg: Msg, mut model: Model) -> Update<Model> {
             Render(model)
         },
         Msg::EventEditingPrice(price) => {
-            model.event_begin_edited.price = price.parse().unwrap_or(model.event_begin_edited.price);
+//            if price.parse::<f32>().is_err(){
+//                log("Error parsing");
+//            }
+//            model.event_begin_edited.price = price.parse().unwrap_or(0.0);
+            Render(model)
+        },
+        Msg::EventEditingPriceKeyDown(event) => {
+            let target = event.target().unwrap();
+            event.prevent_default();
+            let keycode = seed::to_kbevent(&event).key_code();
+            let letter = std::char::from_u32(keycode).expect("Invalid unicode");
+            let input_el = seed::to_input(&target);
+
+            let mut current: f32 = match input_el.value().parse(){
+                Ok(value) => value,
+                Err(_) => {
+                    log("Invalid current value");
+                    model.event_begin_edited.price = 0.0;
+                    input_el.set_value(&model.event_begin_edited.price.to_string());
+                    return Render(model);
+                }
+            };
+            let mut current = current.to_string();
+            log!("current ", current);
+            current.push(letter);
+            log!("current after push ", current);
+            let maybe_new_value = current.parse::<f32>();
+            match maybe_new_value {
+                Ok(new) => {
+                    log!("new ", new);
+                    model.event_begin_edited.price = new;
+                    input_el.set_value(&model.event_begin_edited.price.to_string());
+                },
+                Err(_) => {
+                },
+            }
+
+
+//            if keycode < 48 || keycode > 57 {
+//                log("Blocked");
+//                event.prevent_default();
+//            }
+
+
+//            let target = event.target().unwrap();
+//            let input_el = seed::to_input(&target);
+//            = input_el.value().parse().unwrap_or(0.0);
+
+//            log(text);
             Render(model)
         },
         Msg::EventEditingPicture(state , event) =>{
